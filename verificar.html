@@ -1,163 +1,229 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Verificar Permiso</title>
-  <style>
-    :root{
-      --bg:#d8f1dc;
-      --green:#4BAF4D;
-      --card:#ffffff;
-      --text:#111;
-      --line:#d9d9d9;
-    }
-    *{box-sizing:border-box}
-    body{
-      margin:0;
-      font-family: Arial, Helvetica, sans-serif;
-      background:var(--bg);
-      color:var(--text);
-    }
-    .page{
-      width:min(720px,100%);
-      margin:0 auto;
-      padding:22px 16px 30px;
-    }
-    .header{
-      width:min(650px,92%);
-      margin:0 auto 16px;
-      background:var(--card);
-      border-radius:10px;
-      padding:16px;
-      border:1px solid rgba(0,0,0,.06);
-    }
-    h1{
-      margin:0 0 10px;
-      font-size:26px;
-      font-weight:900;
-    }
-    p{ margin:0; color:#333; }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Verificar Permiso</title>
+<style>
+  :root{
+    --bg: #dff3e3;
+    --green: #4caf50;
+    --value: #177a5a;
+    --line: #d9eadb;
+    --text: #111;
+  }
 
-    .card{
-      width:min(650px,92%);
-      margin:14px auto 0;
-      background:var(--card);
-      border-radius:10px;
-      border:1px solid rgba(0,0,0,.06);
-      overflow:hidden;
-    }
-    .row{
-      padding:14px;
-      border-top:1px solid var(--line);
-    }
-    .row:first-child{border-top:none}
-    label{
-      display:block;
-      font-weight:900;
-      text-transform:uppercase;
-      letter-spacing:.3px;
-      margin-bottom:8px;
-    }
-    input{
-      width:100%;
-      padding:14px 12px;
-      font-size:18px;
-      border:1px solid #cfcfcf;
-      border-radius:10px;
-      outline:none;
-    }
-    input:focus{ border-color: var(--green); }
+  *{ box-sizing:border-box; }
 
-    .actions{
-      width:min(650px,92%);
-      margin:18px auto 0;
-      display:flex;
-      gap:12px;
-    }
-    .btn{
-      flex:1;
-      border:none;
-      border-radius:10px;
-      padding:16px 14px;
-      font-weight:900;
-      font-size:18px;
-      cursor:pointer;
-    }
-    .btn-primary{ background:var(--green); color:#fff; }
-    .btn-ghost{ background:#fff; color:#111; border:1px solid rgba(0,0,0,.12); }
-    .hint{
-      width:min(650px,92%);
-      margin:10px auto 0;
-      font-size:14px;
-      color:#333;
-    }
-  </style>
+  body{
+    margin:0;
+    font-family: Arial, Helvetica, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+  }
+
+  .wrap{
+    max-width: 520px;
+    margin: 0 auto;
+    padding: 22px 18px 26px;
+  }
+
+  /* Big oval */
+  .badge{
+    width: 100%;
+    height: 300px;
+    background: var(--green);
+    border-radius: 180px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    margin: 0 auto 22px;
+  }
+  .badge span{
+    color:#fff;
+    font-weight: 900;
+    font-size: 58px;
+    line-height: 1.02;
+    text-shadow: 3px 3px 0 rgba(0,0,0,.55);
+  }
+
+  /* Title */
+  .title{
+    text-align:center;
+    font-weight: 900;
+    font-size: 34px;
+    line-height: 1.12;
+    margin: 0 0 18px;
+    text-shadow: 2px 2px 0 rgba(0,0,0,.35);
+  }
+
+  /* Consulta line */
+  .consulta{
+    font-size: 14px;
+    font-weight: 800;
+    letter-spacing: .2px;
+    margin: 0 2px 10px;
+    text-transform: uppercase;
+  }
+  .consulta .light{
+    font-weight: 500;
+    text-transform: none;
+  }
+
+  /* Card with rows */
+  .card{
+    background:#fff;
+    border: 1px solid var(--line);
+  }
+  .row{
+    display:flex;
+    gap: 12px;
+    padding: 10px 12px;
+    border-bottom: 2px solid var(--line);
+    align-items:center;
+  }
+  .row:last-child{ border-bottom: 0; }
+
+  .label{
+    width: 56%;
+    font-size: 13px;
+    font-weight: 900;
+    text-transform: uppercase;
+    line-height: 1.05;
+  }
+  .value{
+    width: 44%;
+    font-size: 18px;
+    font-weight: 900;
+    color: var(--value);
+    line-height: 1.05;
+    text-align:left;
+    word-break: break-word;
+  }
+
+  /* Bottom button */
+  .actions{
+    background:#fff;
+    padding: 18px 0 0;
+  }
+  button{
+    width: 160px;
+    height: 44px;
+    display:block;
+    margin: 0 auto 0;
+    border:0;
+    border-radius: 4px;
+    background: var(--green);
+    color:#fff;
+    font-weight: 900;
+    letter-spacing: .3px;
+    cursor:pointer;
+  }
+
+  @media (max-width:420px){
+    .badge{ height: 270px; }
+    .badge span{ font-size: 52px; }
+    .title{ font-size: 30px; }
+  }
+</style>
 </head>
+
 <body>
-  <div class="page">
-    <div class="header">
-      <h1>Verificar Permiso</h1>
-      <p>Ingresa los datos para consultar el estatus.</p>
+  <div class="wrap">
+    <div class="badge"><span>¡Permiso<br>Vigente!</span></div>
+
+    <div class="title">Permiso de Importación<br>de Auto Americano</div>
+
+    <div class="consulta">
+      FECHA Y HORA DE CONSULTA:
+      <span class="light" id="fechaConsulta"></span>
     </div>
 
     <div class="card">
-      <div class="row">
-        <label for="vin5">Últimos 5 del VIN</label>
-        <input id="vin5" inputmode="text" maxlength="5" placeholder="Ej: 17674" />
-      </div>
-
-      <div class="row">
-        <label for="folio">Folio (opcional)</label>
-        <input id="folio" inputmode="numeric" maxlength="12" placeholder="Ej: 50583758" />
-      </div>
+      <div class="row"><div class="label">FOLIO PERMISO:</div><div class="value" id="folio"></div></div>
+      <div class="row"><div class="label">FECHA DE ALTA:</div><div class="value" id="alta"></div></div>
+      <div class="row"><div class="label">FECHA MÁXIMA<br>DE RETORNO:</div><div class="value" id="retorno"></div></div>
+      <div class="row"><div class="label">DIAS<br>DISPONIBLES:</div><div class="value" id="dias"></div></div>
+      <div class="row"><div class="label">MARCA:</div><div class="value" id="marca"></div></div>
+      <div class="row"><div class="label">VIN:</div><div class="value" id="vin"></div></div>
+      <div class="row"><div class="label">MODELO:</div><div class="value" id="modelo"></div></div>
+      <div class="row"><div class="label">ESTATUS<br>PERMISO:</div><div class="value" id="estatus"></div></div>
+      <div class="row"><div class="label">REMOLQUE:</div><div class="value" id="remolque"></div></div>
     </div>
 
     <div class="actions">
-      <button class="btn btn-ghost" type="button" id="demoBtn">DEMO</button>
-      <button class="btn btn-primary" type="button" id="goBtn">CONSULTAR</button>
-    </div>
-
-    <div class="hint">
-      Tip: esta página puede mandar a <b>resultado.html</b> usando parámetros (ideal para QR).
+      <button onclick="location.href='index.html'">CERRAR</button>
     </div>
   </div>
 
-  <script>
-    const vin5 = document.getElementById("vin5");
-    const folio = document.getElementById("folio");
+<script>
+const p = new URLSearchParams(location.search);
 
-    function cleanVin5(v){
-      return (v || "").toUpperCase().replace(/[^A-Z0-9]/g, "").slice(0,5);
-    }
-    function cleanNum(v){
-      return (v || "").replace(/[^0-9]/g, "").slice(0,12);
-    }
+const folio  = p.get("folio")  || "";
+const marca  = p.get("marca")  || "";
+const modelo = p.get("modelo") || "";
+const vin    = p.get("vin")    || "";
 
-    vin5.addEventListener("input", () => vin5.value = cleanVin5(vin5.value));
-    folio.addEventListener("input", () => folio.value = cleanNum(folio.value));
+// Read dates from URL
+const fechaAltaRaw = p.get("fechaAlta") || ""; // YYYY-MM-DD
+const DIAS_PERMISO = parseInt(p.get("dias") || "180", 10);
 
-    document.getElementById("demoBtn").addEventListener("click", () => {
-      vin5.value = "17674";
-      folio.value = "50583758";
-    });
+// Masked VIN: ******** + last 8
+const maskedVin = vin ? ("********" + vin.slice(-8)) : "";
 
-    document.getElementById("goBtn").addEventListener("click", () => {
-      const v = cleanVin5(vin5.value);
-      if(v.length !== 5){
-        alert("Por favor ingresa exactamente los últimos 5 del VIN.");
-        return;
-      }
-      const f = cleanNum(folio.value);
-      const params = new URLSearchParams();
-      params.set("vin5", v);
-      if(f) params.set("folio", f);
+// Banjercito-like date format: DD/MON/YYYY
+const months = ["JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC"];
+function formatBanjercito(yyyy_mm_dd){
+  if (!yyyy_mm_dd || !yyyy_mm_dd.includes("-")) return "";
+  const [y,m,d] = yyyy_mm_dd.split("-");
+  const mm = parseInt(m,10);
+  return `${d}/${months[mm-1]}/${y}`;
+}
+function addDays(yyyy_mm_dd, days){
+  const dt = new Date(yyyy_mm_dd + "T12:00:00");
+  dt.setDate(dt.getDate() + days);
+  const y = dt.getFullYear();
+  const m = String(dt.getMonth()+1).padStart(2,"0");
+  const d = String(dt.getDate()).padStart(2,"0");
+  return `${y}-${m}-${d}`;
+}
 
-      // Optional: you can also pass other fields here
-      // params.set("marca","HONDA");
+// Return date (keeping your original behavior: +DIAS_PERMISO)
+const altaDisplay = formatBanjercito(fechaAltaRaw);
+const retornoRaw = fechaAltaRaw ? addDays(fechaAltaRaw, DIAS_PERMISO) : "";
+const retornoDisplay = retornoRaw ? formatBanjercito(retornoRaw) : "";
 
-      window.location.href = "resultado.html?" + params.toString();
-    });
-  </script>
+// Consulta time (local) like: "24 de noviembre de 2025 22:26:46"
+const now = new Date();
+const fecha = now.toLocaleDateString("es-MX", { day:"2-digit", month:"long", year:"numeric" });
+const hora  = now.toLocaleTimeString("es-MX", { hour12:false });
+document.getElementById("fechaConsulta").textContent = `${fecha} ${hora}`;
+
+// Remaining days
+function diffDays(from_yyyy_mm_dd, to_yyyy_mm_dd){
+  const a = new Date(from_yyyy_mm_dd + "T12:00:00");
+  const b = new Date(to_yyyy_mm_dd + "T12:00:00");
+  return Math.floor((b - a) / (1000*60*60*24));
+}
+const hoyRaw =
+  `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,"0")}-${String(now.getDate()).padStart(2,"0")}`;
+
+const restantes =
+  (fechaAltaRaw && retornoRaw)
+    ? Math.max(0, DIAS_PERMISO - diffDays(fechaAltaRaw, hoyRaw))
+    : "";
+
+// Fill values
+document.getElementById("folio").textContent   = folio;
+document.getElementById("alta").textContent    = altaDisplay;
+document.getElementById("retorno").textContent = retornoDisplay;
+document.getElementById("dias").textContent    = (restantes === "" ? "" : String(restantes));
+document.getElementById("marca").textContent   = marca;
+document.getElementById("vin").textContent     = maskedVin;
+document.getElementById("modelo").textContent  = modelo;
+document.getElementById("estatus").textContent = "VIGENTE";
+document.getElementById("remolque").textContent = "SIN REMOLQUE";
+</script>
 </body>
 </html>
