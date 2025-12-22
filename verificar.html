@@ -60,7 +60,7 @@
     text-shadow:2px 2px 0 rgba(0,0,0,.35);
   }
 
-  /* Date line: label bold, date on one line, time next line (like screenshot) */
+  /* Date line */
   .consulta{
     margin:0 2px 10px;
     font-size:15px;
@@ -72,64 +72,64 @@
   }
   .consulta .value{
     font-weight:500;
-    display:inline;
     text-transform:none;
   }
   .consulta .time{
-    display:block;         /* time on next line */
+    display:block;
     margin-top:2px;
     font-weight:500;
   }
 
-  /* Table card */
+  /* Card */
   .card{
     background:#fff;
     border:1px solid var(--line);
   }
 
+  /* Rows */
   .row{
     display:flex;
     align-items:center;
-    min-height:62px;
-    padding: 10px 12px;
+    min-height:56px;              /* ✅ shorter rows */
+    padding: 8px 12px;            /* ✅ less vertical padding */
     border-bottom:2px solid var(--line);
     background:#fff;
   }
   .row:nth-child(even){ background: var(--row); }
   .row:last-child{ border-bottom:0; }
 
-  /* Left labels */
+  /* ✅ spacing fix: bring values closer (60/40) */
   .labelCell{
-    width:58%;
+    width:60%;
     font-size:14px;
     font-weight:900;
     text-transform:uppercase;
     line-height:1.05;
-    padding-right:10px;
+    padding-right:8px;
   }
 
-  /* Right values (MATCH: smaller + centered + no clipping) */
   .valueCell{
-    width:42%;
-    font-size:22px;        /* ✅ smaller like screenshot */
+    width:40%;
+    font-size:20px;               /* ✅ smaller like screenshot */
     font-weight:900;
     color:var(--value);
     line-height:1.05;
-    text-align:center;     /* ✅ centered like screenshot */
-
-    /* ✅ prevent iPhone clipping */
+    text-align:center;
     white-space:normal;
     overflow:visible;
     word-break:break-word;
   }
 
-  /* Bottom white area + button */
+  /* ✅ keep long stuff from wrapping as much */
+  #vin{ font-size:18px; }
+  #remolque{ font-size:18px; }
+
+  /* Button inside white area */
   .actions{
     background:#fff;
-    padding: 18px 0 18px;
+    padding: 16px 0 16px;
     border-top:2px solid var(--line);
   }
-
   button{
     width: 260px;
     max-width: 90%;
@@ -150,7 +150,8 @@
     .badge{ height:270px; }
     .badge span{ font-size:52px; }
     .title{ font-size:30px; }
-    .valueCell{ font-size:20px; }
+    .valueCell{ font-size:19px; }
+    #vin,#remolque{ font-size:17px; }
   }
 </style>
 </head>
@@ -197,38 +198,35 @@ const DIAS_PERMISO = parseInt(p.get("dias") || "180", 10);
 
 const maskedVin = vin ? ("********" + vin.slice(-8)) : "";
 
+// DD/MON/YYYY
 const months = ["JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC"];
 function formatBanjercito(yyyy_mm_dd){
   if (!yyyy_mm_dd || !yyyy_mm_dd.includes("-")) return "";
   const [y,m,d] = yyyy_mm_dd.split("-");
-  const mm = parseInt(m,10);
-  return `${d}/${months[mm-1]}/${y}`;
+  return `${d}/${months[parseInt(m,10)-1]}/${y}`;
 }
 function addDays(yyyy_mm_dd, days){
   const dt = new Date(yyyy_mm_dd + "T12:00:00");
   dt.setDate(dt.getDate() + days);
-  const y = dt.getFullYear();
-  const m = String(dt.getMonth()+1).padStart(2,"0");
-  const d = String(dt.getDate()).padStart(2,"0");
-  return `${y}-${m}-${d}`;
+  return `${dt.getFullYear()}-${String(dt.getMonth()+1).padStart(2,"0")}-${String(dt.getDate()).padStart(2,"0")}`;
 }
 
 const altaDisplay = formatBanjercito(fechaAltaRaw);
 const retornoRaw = fechaAltaRaw ? addDays(fechaAltaRaw, DIAS_PERMISO) : "";
 const retornoDisplay = retornoRaw ? formatBanjercito(retornoRaw) : "";
 
-/* FECHA split into 2 lines like screenshot */
+// Fecha consulta split into 2 lines
 const now = new Date();
 const fecha = now.toLocaleDateString("es-MX", { day:"2-digit", month:"long", year:"numeric" });
 const hora  = now.toLocaleTimeString("es-MX", { hour12:false });
 document.getElementById("fechaFecha").textContent = fecha;
 document.getElementById("fechaHora").textContent  = hora;
 
-/* Remaining days */
+// Remaining days
 function diffDays(from_yyyy_mm_dd, to_yyyy_mm_dd){
   const a = new Date(from_yyyy_mm_dd + "T12:00:00");
   const b = new Date(to_yyyy_mm_dd + "T12:00:00");
-  return Math.floor((b - a) / (1000*60*60*24));
+  return Math.floor((b - a) / 86400000);
 }
 const hoyRaw =
   `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,"0")}-${String(now.getDate()).padStart(2,"0")}`;
@@ -238,7 +236,7 @@ const restantes =
     ? Math.max(0, DIAS_PERMISO - diffDays(fechaAltaRaw, hoyRaw))
     : "";
 
-/* Fill */
+// Fill
 document.getElementById("folio").textContent   = folio;
 document.getElementById("alta").textContent    = altaDisplay;
 document.getElementById("retorno").textContent = retornoDisplay;
