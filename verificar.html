@@ -9,7 +9,8 @@
     --bg: #dff3e3;
     --green: #4caf50;
     --value: #177a5a;
-    --line: #d9eadb;
+    --line: #d7e6d7;
+    --rowbg: #f4f4f4;
     --text: #111;
   }
 
@@ -43,7 +44,7 @@
   .badge span{
     color:#fff;
     font-weight: 900;
-    font-size: 58px;
+    font-size: 60px;
     line-height: 1.02;
     text-shadow: 3px 3px 0 rgba(0,0,0,.55);
   }
@@ -52,79 +53,89 @@
   .title{
     text-align:center;
     font-weight: 900;
-    font-size: 34px;
+    font-size: 36px;
     line-height: 1.12;
-    margin: 0 0 18px;
-    text-shadow: 2px 2px 0 rgba(0,0,0,.35);
+    margin: 0 0 16px;
+    text-shadow: 3px 3px 0 rgba(0,0,0,.40);
   }
 
-  /* Consulta line */
+  /* Consulta line (like screenshot: label bold, value normal) */
   .consulta{
-    font-size: 14px;
-    font-weight: 800;
-    letter-spacing: .2px;
-    margin: 0 2px 10px;
+    display:flex;
+    flex-wrap:wrap;
+    gap: 6px;
+    font-size: 16px;
+    margin: 0 2px 12px;
+  }
+  .consulta .label{
+    font-weight: 900;
     text-transform: uppercase;
   }
-  .consulta .light{
+  .consulta .value{
     font-weight: 500;
     text-transform: none;
   }
 
-  /* Card with rows */
+  /* Card */
   .card{
     background:#fff;
     border: 1px solid var(--line);
+    padding: 10px 10px 18px;
   }
+
   .row{
     display:flex;
-    gap: 12px;
-    padding: 10px 12px;
-    border-bottom: 2px solid var(--line);
     align-items:center;
+    min-height: 58px;
+    background: var(--rowbg);
+    border: 1px solid var(--line);
+    border-left: 0;
+    border-right: 0;
   }
-  .row:last-child{ border-bottom: 0; }
+  .row + .row{
+    margin-top: 10px;
+  }
 
-  .label{
+  .cellL{
     width: 56%;
-    font-size: 13px;
+    padding: 10px 14px;
+    font-size: 16px;
     font-weight: 900;
     text-transform: uppercase;
     line-height: 1.05;
+    color:#111;
   }
-  .value{
+
+  .cellR{
     width: 44%;
-    font-size: 18px;
+    padding: 10px 14px;
+    font-size: 22px;
     font-weight: 900;
     color: var(--value);
-    line-height: 1.05;
-    text-align:left;
+    text-align: center;         /* ✅ matches screenshot */
     word-break: break-word;
   }
 
-  /* Bottom button */
-  .actions{
-    background:#fff;
-    padding: 18px 0 0;
-  }
-  button{
-    width: 160px;
-    height: 44px;
+  /* Button inside card */
+  .btn{
+    width: 78%;
+    height: 56px;
     display:block;
-    margin: 0 auto 0;
+    margin: 18px auto 0;
     border:0;
-    border-radius: 4px;
+    border-radius: 6px;
     background: var(--green);
     color:#fff;
     font-weight: 900;
-    letter-spacing: .3px;
+    letter-spacing: .6px;
     cursor:pointer;
   }
 
   @media (max-width:420px){
     .badge{ height: 270px; }
-    .badge span{ font-size: 52px; }
-    .title{ font-size: 30px; }
+    .badge span{ font-size: 54px; }
+    .title{ font-size: 32px; }
+    .cellR{ font-size: 20px; }
   }
 </style>
 </head>
@@ -136,24 +147,22 @@
     <div class="title">Permiso de Importación<br>de Auto Americano</div>
 
     <div class="consulta">
-      FECHA Y HORA DE CONSULTA:
-      <span class="light" id="fechaConsulta"></span>
+      <span class="label">FECHA Y HORA DE CONSULTA:</span>
+      <span class="value" id="fechaConsulta"></span>
     </div>
 
     <div class="card">
-      <div class="row"><div class="label">FOLIO PERMISO:</div><div class="value" id="folio"></div></div>
-      <div class="row"><div class="label">FECHA DE ALTA:</div><div class="value" id="alta"></div></div>
-      <div class="row"><div class="label">FECHA MÁXIMA<br>DE RETORNO:</div><div class="value" id="retorno"></div></div>
-      <div class="row"><div class="label">DIAS<br>DISPONIBLES:</div><div class="value" id="dias"></div></div>
-      <div class="row"><div class="label">MARCA:</div><div class="value" id="marca"></div></div>
-      <div class="row"><div class="label">VIN:</div><div class="value" id="vin"></div></div>
-      <div class="row"><div class="label">MODELO:</div><div class="value" id="modelo"></div></div>
-      <div class="row"><div class="label">ESTATUS<br>PERMISO:</div><div class="value" id="estatus"></div></div>
-      <div class="row"><div class="label">REMOLQUE:</div><div class="value" id="remolque"></div></div>
-    </div>
+      <div class="row"><div class="cellL">FOLIO PERMISO:</div><div class="cellR" id="folio"></div></div>
+      <div class="row"><div class="cellL">FECHA DE ALTA:</div><div class="cellR" id="alta"></div></div>
+      <div class="row"><div class="cellL">FECHA MÁXIMA<br>DE RETORNO:</div><div class="cellR" id="retorno"></div></div>
+      <div class="row"><div class="cellL">DIAS<br>DISPONIBLES:</div><div class="cellR" id="dias"></div></div>
+      <div class="row"><div class="cellL">MARCA:</div><div class="cellR" id="marca"></div></div>
+      <div class="row"><div class="cellL">VIN:</div><div class="cellR" id="vin"></div></div>
+      <div class="row"><div class="cellL">MODELO:</div><div class="cellR" id="modelo"></div></div>
+      <div class="row"><div class="cellL">ESTATUS<br>PERMISO:</div><div class="cellR" id="estatus"></div></div>
+      <div class="row"><div class="cellL">REMOLQUE:</div><div class="cellR" id="remolque"></div></div>
 
-    <div class="actions">
-      <button onclick="location.href='index.html'">CERRAR</button>
+      <button class="btn" onclick="location.href='index.html'">CERRAR</button>
     </div>
   </div>
 
@@ -165,14 +174,11 @@ const marca  = p.get("marca")  || "";
 const modelo = p.get("modelo") || "";
 const vin    = p.get("vin")    || "";
 
-// Read dates from URL
 const fechaAltaRaw = p.get("fechaAlta") || ""; // YYYY-MM-DD
 const DIAS_PERMISO = parseInt(p.get("dias") || "180", 10);
 
-// Masked VIN: ******** + last 8
 const maskedVin = vin ? ("********" + vin.slice(-8)) : "";
 
-// Banjercito-like date format: DD/MON/YYYY
 const months = ["JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC"];
 function formatBanjercito(yyyy_mm_dd){
   if (!yyyy_mm_dd || !yyyy_mm_dd.includes("-")) return "";
@@ -189,12 +195,12 @@ function addDays(yyyy_mm_dd, days){
   return `${y}-${m}-${d}`;
 }
 
-// Return date (keeping your original behavior: +DIAS_PERMISO)
+// Return date (same behavior as before: +DIAS_PERMISO)
 const altaDisplay = formatBanjercito(fechaAltaRaw);
 const retornoRaw = fechaAltaRaw ? addDays(fechaAltaRaw, DIAS_PERMISO) : "";
 const retornoDisplay = retornoRaw ? formatBanjercito(retornoRaw) : "";
 
-// Consulta time (local) like: "24 de noviembre de 2025 22:26:46"
+// Consulta time (wraps nicely like screenshot)
 const now = new Date();
 const fecha = now.toLocaleDateString("es-MX", { day:"2-digit", month:"long", year:"numeric" });
 const hora  = now.toLocaleTimeString("es-MX", { hour12:false });
