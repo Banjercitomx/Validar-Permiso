@@ -3,146 +3,138 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Permiso Vigente</title>
+<title>Verificar Permiso</title>
 
 <style>
 :root{
-  --bg: #e4f6e8;
-  --green: #57b04b;        /* Banjercito green */
-  --value: #2f7f66;
-  --row-gray: #f2f2f2;
-  --border: #d6e5d8;
-  --text: #111;
+  --bg:#dff3e3;
+  --green:#4caf50;
+  --value:#177a5a;
+  --line:#d9eadb;
+  --rowAlt:#f2f2f2;
+  --text:#111;
 }
 
-*{ box-sizing:border-box; }
+*{box-sizing:border-box;}
 
 body{
   margin:0;
-  font-family: Arial, Helvetica, sans-serif;
-  background: var(--bg);
-  color: var(--text);
+  font-family:Arial, Helvetica, sans-serif;
+  background:var(--bg);
+  color:var(--text);
 }
 
-.wrapper{
+.wrap{
   max-width:520px;
   margin:0 auto;
-  padding:20px 16px 30px;
+  padding:22px 18px 26px;
 }
 
-/* GREEN OVAL */
+/* Badge */
 .badge{
-  width:100%;
   height:300px;
   background:var(--green);
   border-radius:180px;
   display:flex;
   align-items:center;
   justify-content:center;
-  margin-bottom:18px;
+  margin-bottom:22px;
 }
-
 .badge span{
   color:#fff;
+  font-size:56px;
   font-weight:900;
-  font-size:58px;
-  line-height:1.05;
-  text-shadow:3px 3px 0 rgba(0,0,0,.45);
+  line-height:1.02;
   text-align:center;
+  text-shadow:3px 3px 0 rgba(0,0,0,.55);
 }
 
-/* TITLE */
+/* Title */
 .title{
   text-align:center;
   font-size:34px;
   font-weight:900;
-  line-height:1.15;
+  line-height:1.12;
   margin-bottom:14px;
   text-shadow:2px 2px 0 rgba(0,0,0,.35);
 }
 
-/* CONSULTA */
+/* Consulta */
 .consulta{
   font-size:14px;
-  font-weight:800;
+  font-weight:900;
+  text-transform:uppercase;
   margin-bottom:10px;
 }
-
 .consulta span{
   font-weight:500;
+  text-transform:none;
 }
 
-/* CARD */
+/* Card */
 .card{
   background:#fff;
-  border:1px solid var(--border);
+  border:1px solid var(--line);
 }
 
-/* ROWS */
+/* Rows */
 .row{
   display:flex;
-  padding:14px 14px;
-  border-bottom:2px solid var(--border);
+  align-items:center;
+  padding:12px 14px;
+  border-bottom:2px solid var(--line);
 }
-
 .row:nth-child(even){
-  background:var(--row-gray);
+  background:var(--rowAlt);
 }
-
 .row:last-child{
-  border-bottom:none;
+  border-bottom:0;
 }
 
-/* LABELS */
+/* Label */
 .labelCell{
   width:56%;
   font-size:18px;
   font-weight:900;
   text-transform:uppercase;
   line-height:1.05;
+  padding-right:10px;
 }
 
-/* VALUES — FINAL FIX */
+/* Value */
 .valueCell{
   width:44%;
-  font-size:18px;           /* SAME as label */
+  font-size:18px;              /* SAME SIZE AS LABEL */
   font-weight:900;
   color:var(--value);
-  text-align:left;          /* LEFT justified */
-  white-space:nowrap;       /* VIN stays on one line */
+  text-align:left;
   line-height:1.05;
+  padding-left:22px;           /* ✅ red-line spacing */
+  white-space:nowrap;          /* VIN locked to one line */
 }
 
-/* BUTTON */
+/* Button */
 .actions{
-  padding:18px 0 0;
   background:#fff;
+  padding:18px 0;
 }
-
 button{
+  width:160px;
+  height:44px;
   display:block;
   margin:0 auto;
-  width:180px;
-  height:46px;
-  border:0;
-  border-radius:4px;
   background:var(--green);
   color:#fff;
   font-weight:900;
+  border:0;
+  border-radius:4px;
   letter-spacing:.4px;
-  cursor:pointer;
-}
-
-@media(max-width:420px){
-  .badge{ height:270px; }
-  .badge span{ font-size:52px; }
-  .title{ font-size:30px; }
 }
 </style>
 </head>
 
 <body>
-<div class="wrapper">
+<div class="wrap">
 
   <div class="badge">
     <span>¡Permiso<br>Vigente!</span>
@@ -158,50 +150,15 @@ button{
   </div>
 
   <div class="card">
-    <div class="row">
-      <div class="labelCell">FOLIO PERMISO:</div>
-      <div class="valueCell" id="folio"></div>
-    </div>
-
-    <div class="row">
-      <div class="labelCell">FECHA DE ALTA:</div>
-      <div class="valueCell" id="alta"></div>
-    </div>
-
-    <div class="row">
-      <div class="labelCell">FECHA MÁXIMA<br>DE RETORNO:</div>
-      <div class="valueCell" id="retorno"></div>
-    </div>
-
-    <div class="row">
-      <div class="labelCell">DIAS<br>DISPONIBLES:</div>
-      <div class="valueCell" id="dias"></div>
-    </div>
-
-    <div class="row">
-      <div class="labelCell">MARCA:</div>
-      <div class="valueCell" id="marca"></div>
-    </div>
-
-    <div class="row">
-      <div class="labelCell">VIN:</div>
-      <div class="valueCell" id="vin"></div>
-    </div>
-
-    <div class="row">
-      <div class="labelCell">MODELO:</div>
-      <div class="valueCell" id="modelo"></div>
-    </div>
-
-    <div class="row">
-      <div class="labelCell">ESTATUS<br>PERMISO:</div>
-      <div class="valueCell">VIGENTE</div>
-    </div>
-
-    <div class="row">
-      <div class="labelCell">REMOLQUE:</div>
-      <div class="valueCell">SIN REMOLQUE</div>
-    </div>
+    <div class="row"><div class="labelCell">FOLIO PERMISO:</div><div class="valueCell" id="folio"></div></div>
+    <div class="row"><div class="labelCell">FECHA DE ALTA:</div><div class="valueCell" id="alta"></div></div>
+    <div class="row"><div class="labelCell">FECHA MÁXIMA<br>DE RETORNO:</div><div class="valueCell" id="retorno"></div></div>
+    <div class="row"><div class="labelCell">DIAS<br>DISPONIBLES:</div><div class="valueCell" id="dias"></div></div>
+    <div class="row"><div class="labelCell">MARCA:</div><div class="valueCell" id="marca"></div></div>
+    <div class="row"><div class="labelCell">VIN:</div><div class="valueCell" id="vin"></div></div>
+    <div class="row"><div class="labelCell">MODELO:</div><div class="valueCell" id="modelo"></div></div>
+    <div class="row"><div class="labelCell">ESTATUS<br>PERMISO:</div><div class="valueCell">VIGENTE</div></div>
+    <div class="row"><div class="labelCell">REMOLQUE:</div><div class="valueCell">SIN REMOLQUE</div></div>
   </div>
 
   <div class="actions">
@@ -211,39 +168,31 @@ button{
 </div>
 
 <script>
-const p = new URLSearchParams(location.search);
+const p=new URLSearchParams(location.search);
+const folio=p.get("folio")||"50984679";
+const marca=p.get("marca")||"TOYOTA";
+const modelo=p.get("modelo")||"2024";
+const vin=p.get("vin")||"RM011856";
+const fechaAltaRaw=p.get("fechaAlta")||"2025-12-19";
+const DIAS=180;
 
-const folio  = p.get("folio") || "50984679";
-const marca  = p.get("marca") || "TOYOTA";
-const modelo = p.get("modelo") || "2024";
-const vinRaw = p.get("vin") || "RM011856";
-const fechaAlta = p.get("fechaAlta") || "2025-12-19";
-const diasPermiso = parseInt(p.get("dias") || "180",10);
+const months=["JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC"];
+const fmt=d=>{const[a,b,c]=d.split("-");return`${c}/${months[+b-1]}/${a}`;}
+const addDays=(d,n)=>{const t=new Date(d+"T12:00");t.setDate(t.getDate()+n);return t.toISOString().slice(0,10);}
 
-const months = ["JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC"];
-function formatDate(d){
-  const [y,m,da]=d.split("-");
-  return `${da}/${months[parseInt(m)-1]}/${y}`;
-}
+const retorno=fmt(addDays(fechaAltaRaw,DIAS));
+const hoy=new Date();
+const fecha=hoy.toLocaleDateString("es-MX",{day:"2-digit",month:"long",year:"numeric"});
+const hora=hoy.toLocaleTimeString("es-MX",{hour12:false});
+const diff=Math.max(0,DIAS-Math.floor((new Date(addDays(fechaAltaRaw,DIAS))-hoy)/(1000*60*60*24)));
 
-function addDays(d,days){
-  const dt=new Date(d+"T12:00:00");
-  dt.setDate(dt.getDate()+days);
-  return dt.toISOString().slice(0,10);
-}
-
-const now=new Date();
-document.getElementById("fechaConsulta").textContent =
-  now.toLocaleDateString("es-MX",{day:"2-digit",month:"long",year:"numeric"})+
-  " "+
-  now.toLocaleTimeString("es-MX",{hour12:false});
-
+document.getElementById("fechaConsulta").textContent=`${fecha} ${hora}`;
 document.getElementById("folio").textContent=folio;
-document.getElementById("alta").textContent=formatDate(fechaAlta);
-document.getElementById("retorno").textContent=formatDate(addDays(fechaAlta,diasPermiso));
-document.getElementById("dias").textContent=diasPermiso;
+document.getElementById("alta").textContent=fmt(fechaAltaRaw);
+document.getElementById("retorno").textContent=retorno;
+document.getElementById("dias").textContent=diff;
 document.getElementById("marca").textContent=marca;
-document.getElementById("vin").textContent="********"+vinRaw.slice(-6);
+document.getElementById("vin").textContent="********"+vin.slice(-6);
 document.getElementById("modelo").textContent=modelo;
 </script>
 
