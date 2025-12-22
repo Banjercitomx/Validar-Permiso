@@ -4,12 +4,14 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Verificar Permiso</title>
+
 <style>
   :root{
-    --bg: #dff3e3;
-    --green: #4caf50;
-    --value: #177a5a;
-    --line: #cfe3cf;   /* closer thin divider */
+    --bg: #dff3e3;     /* screenshot background */
+    --green: #4caf50;  /* badge + button */
+    --value: #1f6f55;  /* value text green */
+    --line: #d7e6d7;   /* dividers */
+    --rowbg: #f2f2f2;  /* alternating row */
     --text: #111;
   }
 
@@ -31,19 +33,19 @@
   /* Big oval */
   .badge{
     width: 100%;
-    height: 300px;
+    height: 320px;
     background: var(--green);
-    border-radius: 180px;
+    border-radius: 200px;
     display:flex;
     align-items:center;
     justify-content:center;
     text-align:center;
-    margin: 0 auto 22px;
+    margin: 0 auto 18px;
   }
   .badge span{
     color:#fff;
     font-weight: 900;
-    font-size: 60px;
+    font-size: 64px;
     line-height: 1.02;
     text-shadow: 3px 3px 0 rgba(0,0,0,.55);
   }
@@ -52,92 +54,108 @@
   .title{
     text-align:center;
     font-weight: 900;
-    font-size: 36px;
+    font-size: 40px;
     line-height: 1.12;
     margin: 0 0 14px;
     text-shadow: 3px 3px 0 rgba(0,0,0,.40);
   }
 
-  /* FECHA line (single line like screenshot) */
+  /* Date line: EXACT look (two lines: label + value wraps naturally) */
   .consulta{
-    font-size: 16px;
-    margin: 0 2px 10px;
-    line-height: 1.2;
+    font-size: 18px;
+    line-height: 1.25;
+    margin: 0 2px 12px;
   }
   .consulta .label{
     font-weight: 900;
     text-transform: uppercase;
   }
   .consulta .value{
-    font-weight: 500;
+    font-weight: 400;
   }
 
-  /* Card: tight table look */
+  /* Table card */
   .card{
     background:#fff;
-    border: 1px solid var(--line);
+    border: 2px solid var(--line);
   }
 
-  /* Rows: no gaps, white background, thin separators */
+  /* Rows: no gaps, alternating grey like screenshot */
   .row{
     display:flex;
     align-items:center;
-    min-height: 54px;
+    min-height: 70px;
+    border-bottom: 2px solid var(--line);
     background:#fff;
-    border-bottom: 1px solid var(--line);
   }
-  .row:last-child{ border-bottom:none; }
+  .row:nth-child(even){
+    background: var(--rowbg);
+  }
+  .row:last-child{
+    border-bottom:none;
+  }
 
   .cellL{
-    width: 54%;
-    padding: 12px 12px;
-    font-size: 16px;
-    font-weight: 400;          /* lighter like reference */
+    width: 52%;
+    padding: 16px 16px;
+    font-size: 20px;
+    font-weight: 400;          /* lighter like screenshot */
     text-transform: uppercase;
     line-height: 1.05;
     color:#111;
   }
 
   .cellR{
-    width: 46%;
-    padding: 12px 12px;
-    font-size: 28px;           /* bigger values */
+    width: 48%;
+    padding: 16px 16px;
+    font-size: 34px;           /* value size like screenshot */
     font-weight: 900;
     color: var(--value);
-    text-align: left;          /* ✅ left aligned like screenshot */
+    text-align: left;          /* values are LEFT aligned in screenshot */
     line-height: 1.05;
-    white-space: nowrap;       /* keep dates on one line */
+
+    /* keep values on one line like screenshot */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: clip;
   }
 
-  /* VIN can be long; allow wrap only for VIN */
+  /* VIN should stay on one line (like screenshot) */
   #vin{
-    white-space: normal;
-    overflow-wrap: anywhere;
-    font-size: 26px;
+    font-size: 32px;
+    letter-spacing: .5px;
   }
 
-  /* Button (small, like screenshot) */
+  /* Button at bottom */
+  .btnWrap{
+    background: var(--bg);
+    padding-top: 18px;
+  }
   .btn{
-    width: 260px;
-    max-width: 86%;
-    height: 54px;
-    background: var(--green);
-    color:white;
-    border:none;
-    border-radius:10px;
-    font-size:20px;
-    font-weight:900;
+    width: 320px;
+    max-width: 90%;
+    height: 58px;
     display:block;
-    margin: 22px auto 18px;
+    margin: 0 auto;
+    border:0;
+    border-radius: 8px;
+    background: var(--green);
+    color:#fff;
+    font-size: 20px;
+    font-weight: 900;
+    letter-spacing: 1px;
     cursor:pointer;
   }
 
+  /* iPhone screens */
   @media (max-width:420px){
-    .badge{ height: 270px; }
-    .badge span{ font-size: 54px; }
-    .title{ font-size: 32px; }
-    .cellR{ font-size: 24px; }
-    #vin{ font-size: 22px; }
+    .wrap{ padding: 18px 14px 22px; }
+    .badge{ height: 300px; border-radius: 190px; }
+    .badge span{ font-size: 58px; }
+    .title{ font-size: 36px; }
+    .cellL{ font-size: 18px; }
+    .cellR{ font-size: 30px; }
+    #vin{ font-size: 28px; }
   }
 </style>
 </head>
@@ -163,7 +181,9 @@
       <div class="row"><div class="cellL">MODELO:</div><div class="cellR" id="modelo"></div></div>
       <div class="row"><div class="cellL">ESTATUS<br>PERMISO:</div><div class="cellR" id="estatus"></div></div>
       <div class="row"><div class="cellL">REMOLQUE:</div><div class="cellR" id="remolque"></div></div>
+    </div>
 
+    <div class="btnWrap">
       <button class="btn" onclick="location.href='index.html'">CERRAR</button>
     </div>
   </div>
@@ -179,9 +199,10 @@ const vin    = p.get("vin")    || "";
 const fechaAltaRaw = p.get("fechaAlta") || ""; // YYYY-MM-DD
 const DIAS_PERMISO = parseInt(p.get("dias") || "180", 10);
 
+/* VIN mask: ******** + last 8 */
 const maskedVin = vin ? ("********" + vin.slice(-8)) : "";
 
-// DD/MON/YYYY
+/* DD/MON/YYYY */
 const months = ["JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC"];
 function formatBanjercito(yyyy_mm_dd){
   if (!yyyy_mm_dd || !yyyy_mm_dd.includes("-")) return "";
@@ -198,21 +219,21 @@ function addDays(yyyy_mm_dd, days){
   return `${y}-${m}-${d}`;
 }
 
-// Return date (+DIAS_PERMISO)
+/* Return date (+DIAS_PERMISO) */
 const altaDisplay = formatBanjercito(fechaAltaRaw);
 const retornoRaw = fechaAltaRaw ? addDays(fechaAltaRaw, DIAS_PERMISO) : "";
 const retornoDisplay = retornoRaw ? formatBanjercito(retornoRaw) : "";
 
-// FECHA Y HORA: "24 de Noviembre del 2025 22:26:46"
+/* FECHA Y HORA like screenshot: "24 de Noviembre del 2025 22:26:46" */
 const now = new Date();
-const day = String(now.getDate()).padStart(2,"0");
-const monthName = now.toLocaleDateString("es-MX", { month:"long" });
+const dd = String(now.getDate()).padStart(2,"0");
+const monthName = now.toLocaleDateString("es-MX",{month:"long"});
 const monthCap = monthName.charAt(0).toUpperCase() + monthName.slice(1);
-const year = now.getFullYear();
-const time = now.toLocaleTimeString("es-MX", { hour12:false });
-document.getElementById("fechaConsulta").textContent = `${day} de ${monthCap} del ${year} ${time}`;
+const yyyy = now.getFullYear();
+const hhmmss = now.toLocaleTimeString("es-MX",{hour12:false});
+document.getElementById("fechaConsulta").textContent = ` ${dd} de ${monthCap} del ${yyyy} ${hhmmss}`;
 
-// Remaining days
+/* Remaining days */
 function diffDays(from_yyyy_mm_dd, to_yyyy_mm_dd){
   const a = new Date(from_yyyy_mm_dd + "T12:00:00");
   const b = new Date(to_yyyy_mm_dd + "T12:00:00");
@@ -226,12 +247,12 @@ const restantes =
     ? Math.max(0, DIAS_PERMISO - diffDays(fechaAltaRaw, hoyRaw))
     : "";
 
-// Fill values
+/* Fill values */
 document.getElementById("folio").textContent   = folio;
 document.getElementById("alta").textContent    = altaDisplay;
 document.getElementById("retorno").textContent = retornoDisplay;
 document.getElementById("dias").textContent    = (restantes === "" ? "" : String(restantes));
-document.getElementById("marca").textContent   = marca.toUpperCase();
+document.getElementById("marca").textContent   = (marca || "").toUpperCase();
 document.getElementById("vin").textContent     = maskedVin;
 document.getElementById("modelo").textContent  = modelo;
 document.getElementById("estatus").textContent = "VIGENTE";
