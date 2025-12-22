@@ -7,11 +7,11 @@
 
 <style>
   :root{
-    --bg:#d7f2dc;      /* original page green-tint */
-    --green:#4BAF4D;   /* badge/button green */
-    --value:#2F6E5F;   /* original value teal */
-    --line:#d9eadb;    /* row separators */
-    --row:#f0f1f0;     /* alternating gray tint */
+    --bg:#d7f2dc;
+    --green:#4BAF4D;
+    --value:#2F6E5F;
+    --line:#d9eadb;
+    --row:#f0f1f0;
     --text:#111;
   }
 
@@ -30,7 +30,7 @@
     padding: 22px 18px 26px;
   }
 
-  /* top oval */
+  /* Big oval */
   .badge{
     width:100%;
     height: 300px;
@@ -50,7 +50,7 @@
     text-shadow: 3px 3px 0 rgba(0,0,0,.55);
   }
 
-  /* title */
+  /* Title */
   .title{
     text-align:center;
     font-weight: 900;
@@ -60,7 +60,7 @@
     text-shadow: 3px 3px 0 rgba(0,0,0,.35);
   }
 
-  /* fecha line (wraps naturally like screenshot) */
+  /* Consulta line */
   .consulta{
     font-size: 16px;
     line-height: 1.25;
@@ -71,59 +71,67 @@
     text-transform: uppercase;
   }
 
-  /* card */
+  /* Card */
   .card{
     background:#fff;
     border: 1px solid var(--line);
+    overflow:hidden;
   }
 
-  /* rows */
+  /* Rows */
   .row{
     display:flex;
     align-items:center;
     min-height: 66px;
-    padding: 14px 14px;
+    padding: 14px 16px;
     border-bottom: 3px solid var(--line);
     background:#fff;
+    gap: 10px;
   }
   .row:nth-child(even){ background: var(--row); }
   .row:last-child{ border-bottom: 0; }
 
-  /* labels: NOT super-bold in original */
+  /* Labels */
   .labelCell{
-    width: 56%;
+    flex: 0 0 56%;
     font-size: 18px;
-    font-weight: 500;         /* key: lighter than before */
+    font-weight: 500;
     text-transform: uppercase;
     line-height: 1.05;
-    padding-right: 10px;
   }
 
-  /* values: bigger, bold, green */
+  /* ✅ Values: slightly bigger than labels, “left-justified but centered” */
   .valueCell{
-    width: 44%;
-    font-size: 30px;
+    flex: 1 1 44%;
+    min-width: 0;
+
+    font-size: 21px;     /* slightly bigger than 18px labels */
     font-weight: 900;
     color: var(--value);
     line-height: 1.05;
-    text-align: center;
-    white-space: nowrap;
-  }
 
-  /* VIN must be ONE LINE always */
-  #vin{
-    white-space: nowrap;
+    display:flex;
+    justify-content:center; /* centers the value block in the right column */
+  }
+  .valueCell > span{
+    display:inline-block;
+    text-align:left;        /* left-justified text */
+    white-space: nowrap;    /* keep one line */
+    max-width: 100%;
     overflow: hidden;
     text-overflow: clip;
-    font-size: 26px;          /* a touch smaller to guarantee fit */
+  }
+
+  /* VIN: always one line + a bit tighter so it fits */
+  #vin span{
     letter-spacing: .4px;
   }
 
-  /* bottom button OUTSIDE card like original */
+  /* Button OUTSIDE card, right aligned like original */
   .btnBar{
     padding: 18px 0 0;
     display:flex;
-    justify-content:flex-end; /* right aligned */
+    justify-content:flex-end;
   }
   .btn{
     width: 240px;
@@ -142,8 +150,7 @@
     .badge span{ font-size: 54px; }
     .title{ font-size: 32px; }
     .labelCell{ font-size: 16px; }
-    .valueCell{ font-size: 28px; }
-    #vin{ font-size: 24px; }
+    .valueCell{ font-size: 19px; }
   }
 </style>
 </head>
@@ -161,15 +168,15 @@
     </div>
 
     <div class="card">
-      <div class="row"><div class="labelCell">FOLIO PERMISO:</div><div class="valueCell" id="folio"></div></div>
-      <div class="row"><div class="labelCell">FECHA DE ALTA:</div><div class="valueCell" id="alta"></div></div>
-      <div class="row"><div class="labelCell">FECHA MÁXIMA<br>DE RETORNO:</div><div class="valueCell" id="retorno"></div></div>
-      <div class="row"><div class="labelCell">DIAS<br>DISPONIBLES:</div><div class="valueCell" id="dias"></div></div>
-      <div class="row"><div class="labelCell">MARCA:</div><div class="valueCell" id="marca"></div></div>
-      <div class="row"><div class="labelCell">VIN:</div><div class="valueCell" id="vin"></div></div>
-      <div class="row"><div class="labelCell">MODELO:</div><div class="valueCell" id="modelo"></div></div>
-      <div class="row"><div class="labelCell">ESTATUS<br>PERMISO:</div><div class="valueCell" id="estatus">VIGENTE</div></div>
-      <div class="row"><div class="labelCell">REMOLQUE:</div><div class="valueCell" id="remolque">SIN REMOLQUE</div></div>
+      <div class="row"><div class="labelCell">FOLIO PERMISO:</div><div class="valueCell" id="folio"><span></span></div></div>
+      <div class="row"><div class="labelCell">FECHA DE ALTA:</div><div class="valueCell" id="alta"><span></span></div></div>
+      <div class="row"><div class="labelCell">FECHA MÁXIMA<br>DE RETORNO:</div><div class="valueCell" id="retorno"><span></span></div></div>
+      <div class="row"><div class="labelCell">DIAS<br>DISPONIBLES:</div><div class="valueCell" id="dias"><span></span></div></div>
+      <div class="row"><div class="labelCell">MARCA:</div><div class="valueCell" id="marca"><span></span></div></div>
+      <div class="row"><div class="labelCell">VIN:</div><div class="valueCell" id="vin"><span></span></div></div>
+      <div class="row"><div class="labelCell">MODELO:</div><div class="valueCell" id="modelo"><span></span></div></div>
+      <div class="row"><div class="labelCell">ESTATUS<br>PERMISO:</div><div class="valueCell" id="estatus"><span></span></div></div>
+      <div class="row"><div class="labelCell">REMOLQUE:</div><div class="valueCell" id="remolque"><span></span></div></div>
     </div>
 
     <div class="btnBar">
@@ -179,58 +186,62 @@
   </div>
 
 <script>
-const p = new URLSearchParams(location.search);
+  const p = new URLSearchParams(location.search);
 
-const folio  = p.get("folio")  || "";
-const marca  = p.get("marca")  || "";
-const modelo = p.get("modelo") || "";
-const vin    = p.get("vin")    || "";
+  const folio  = p.get("folio")  || "";
+  const marca  = p.get("marca")  || "";
+  const modelo = p.get("modelo") || "";
+  const vin    = p.get("vin")    || "";
 
-const fechaAltaRaw = p.get("fechaAlta") || ""; // YYYY-MM-DD
-const DIAS_PERMISO = parseInt(p.get("dias") || "180", 10);
+  const fechaAltaRaw = p.get("fechaAlta") || ""; // YYYY-MM-DD
+  const DIAS_PERMISO = parseInt(p.get("dias") || "180", 10);
 
-const maskedVin = vin ? ("********" + vin.slice(-8)) : "";
+  // Mask VIN: ******** + last 8
+  const maskedVin = vin ? ("********" + vin.slice(-8)) : "";
 
-const months = ["JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC"];
-function formatBanjercito(yyyy_mm_dd){
-  if (!yyyy_mm_dd || !yyyy_mm_dd.includes("-")) return "";
-  const [y,m,d] = yyyy_mm_dd.split("-");
-  return `${d}/${months[parseInt(m,10)-1]}/${y}`;
-}
-function addDays(yyyy_mm_dd, days){
-  const dt = new Date(yyyy_mm_dd + "T12:00:00");
-  dt.setDate(dt.getDate() + days);
-  return `${dt.getFullYear()}-${String(dt.getMonth()+1).padStart(2,"0")}-${String(dt.getDate()).padStart(2,"0")}`;
-}
+  // DD/MON/YYYY
+  const months = ["JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC"];
+  function formatBanjercito(yyyy_mm_dd){
+    if (!yyyy_mm_dd || !yyyy_mm_dd.includes("-")) return "";
+    const [y,m,d] = yyyy_mm_dd.split("-");
+    return `${d}/${months[parseInt(m,10)-1]}/${y}`;
+  }
+  function addDays(yyyy_mm_dd, days){
+    const dt = new Date(yyyy_mm_dd + "T12:00:00");
+    dt.setDate(dt.getDate() + days);
+    return `${dt.getFullYear()}-${String(dt.getMonth()+1).padStart(2,"0")}-${String(dt.getDate()).padStart(2,"0")}`;
+  }
 
-const altaDisplay = formatBanjercito(fechaAltaRaw);
-const retornoRaw = fechaAltaRaw ? addDays(fechaAltaRaw, DIAS_PERMISO) : "";
-const retornoDisplay = retornoRaw ? formatBanjercito(retornoRaw) : "";
+  const altaDisplay = formatBanjercito(fechaAltaRaw);
+  const retornoRaw = fechaAltaRaw ? addDays(fechaAltaRaw, DIAS_PERMISO) : "";
+  const retornoDisplay = retornoRaw ? formatBanjercito(retornoRaw) : "";
 
-// Consulta time (wraps naturally like the screenshot)
-const now = new Date();
-const fecha = now.toLocaleDateString("es-MX",{day:"2-digit",month:"long",year:"numeric"});
-const hora  = now.toLocaleTimeString("es-MX",{hour12:false});
-document.getElementById("fechaConsulta").textContent = ` ${fecha} ${hora}`;
+  // Consulta time
+  const now = new Date();
+  const fecha = now.toLocaleDateString("es-MX",{day:"2-digit",month:"long",year:"numeric"});
+  const hora  = now.toLocaleTimeString("es-MX",{hour12:false});
+  document.getElementById("fechaConsulta").textContent = ` ${fecha} ${hora}`;
 
-// Remaining days
-function diffDays(from_yyyy_mm_dd, to_yyyy_mm_dd){
-  const a = new Date(from_yyyy_mm_dd + "T12:00:00");
-  const b = new Date(to_yyyy_mm_dd + "T12:00:00");
-  return Math.floor((b - a) / 86400000);
-}
-const hoyRaw = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,"0")}-${String(now.getDate()).padStart(2,"0")}`;
-const usados = fechaAltaRaw ? diffDays(fechaAltaRaw, hoyRaw) : 0;
-const restantes = (fechaAltaRaw && retornoRaw) ? Math.max(0, DIAS_PERMISO - usados) : "";
+  // Remaining days
+  function diffDays(from_yyyy_mm_dd, to_yyyy_mm_dd){
+    const a = new Date(from_yyyy_mm_dd + "T12:00:00");
+    const b = new Date(to_yyyy_mm_dd + "T12:00:00");
+    return Math.floor((b - a) / 86400000);
+  }
+  const hoyRaw = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,"0")}-${String(now.getDate()).padStart(2,"0")}`;
+  const usados = fechaAltaRaw ? diffDays(fechaAltaRaw, hoyRaw) : 0;
+  const restantes = (fechaAltaRaw && retornoRaw) ? Math.max(0, DIAS_PERMISO - usados) : "";
 
-// Fill values
-document.getElementById("folio").textContent   = folio;
-document.getElementById("alta").textContent    = altaDisplay;
-document.getElementById("retorno").textContent = retornoDisplay;
-document.getElementById("dias").textContent    = (restantes === "" ? "" : String(restantes));
-document.getElementById("marca").textContent   = marca;
-document.getElementById("vin").textContent     = maskedVin;
-document.getElementById("modelo").textContent  = modelo;
+  // Fill values (into the inner span)
+  document.querySelector("#folio span").textContent    = folio;
+  document.querySelector("#alta span").textContent     = altaDisplay;
+  document.querySelector("#retorno span").textContent  = retornoDisplay;
+  document.querySelector("#dias span").textContent     = (restantes === "" ? "" : String(restantes));
+  document.querySelector("#marca span").textContent    = marca;
+  document.querySelector("#vin span").textContent      = maskedVin;
+  document.querySelector("#modelo span").textContent   = modelo;
+  document.querySelector("#estatus span").textContent  = "VIGENTE";
+  document.querySelector("#remolque span").textContent = "SIN REMOLQUE";
 </script>
 
 </body>
