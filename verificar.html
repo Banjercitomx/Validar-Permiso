@@ -7,11 +7,12 @@
 
 <style>
   :root{
-    --bg: #dff3e3;
-    --green: #4caf50;
-    --value: #177a5a;
-    --line: #d7e6d7;
+    --bg: #d7f2dc;
+    --line: #cde7d0;
+    --value: #1a6f57;
     --text: #111;
+    --white: #ffffff;
+    --greenBtn: #34a853;
   }
 
   *{ box-sizing:border-box; }
@@ -24,140 +25,110 @@
   }
 
   .wrap{
-    max-width: 520px;
+    max-width: 720px;
     margin: 0 auto;
-    padding: 22px 18px 26px;
+    padding: 18px 14px 26px;
   }
 
-  /* Big oval */
-  .badge{
-    width: 100%;
-    height: 300px;
-    background: var(--green);
-    border-radius: 180px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    text-align:center;
-    margin: 0 auto 22px;
-  }
-  .badge span{
-    color:#fff;
-    font-weight: 900;
-    font-size: 60px;
-    line-height: 1.02;
-    text-shadow: 3px 3px 0 rgba(0,0,0,.55);
-  }
-
-  /* Title */
-  .title{
-    text-align:center;
-    font-weight: 900;
-    font-size: 36px;
-    line-height: 1.12;
-    margin: 0 0 16px;
-    text-shadow: 3px 3px 0 rgba(0,0,0,.40);
-  }
-
-  /* Consulta */
+  /* Top date line */
   .consulta{
-    margin: 6px 2px 16px;
-    font-size: 18px;
-    line-height: 1.35;
+    font-size: 26px;
+    line-height: 1.15;
+    margin: 0 0 14px;
   }
   .consulta .label{
     font-weight: 900;
     text-transform: uppercase;
   }
-  .consulta .value{
-    display:block;      /* date on one line, time on next line */
-    margin-top: 2px;
-    font-weight: 500;
-    text-transform: none;
+  .consulta .val{
+    font-weight: 400;
   }
 
-  /* Card */
+  /* Table */
   .card{
-    background:#fff;
+    background: var(--white);
     border: 2px solid var(--line);
   }
 
-  /* Rows */
   .row{
     display:flex;
     align-items:center;
-    background:#fff;
+    min-height: 78px;
     border-bottom: 2px solid var(--line);
   }
-  .row:last-of-type{
+  .row:last-child{
     border-bottom: none;
   }
 
-  /* ✅ Give the value side more room (prevents ugly wrapping) */
   .cellL{
-    width: 50%;
-    padding: 14px 16px;
-    font-size: 18px;
-    font-weight: 900;
+    width: 48%;
+    padding: 18px 18px;
+    font-size: 30px;
+    font-weight: 400;       /* ✅ lighter like reference */
     text-transform: uppercase;
-    line-height: 1.15;
+    line-height: 1.05;
     color:#111;
   }
 
   .cellR{
-    width: 50%;
-    padding: 14px 16px;
-    font-size: 26px;
+    width: 52%;
+    padding: 18px 18px;
+    font-size: 44px;        /* ✅ big green values */
     font-weight: 900;
     color: var(--value);
-    text-align: center;
-    line-height: 1.1;
+    text-align: left;       /* ✅ NOT centered */
+    line-height: 1.05;
 
-    /* ✅ Prevent breaking inside values like 19/DEC/2025 or SIN REMOLQUE */
-    white-space: nowrap;
-    word-break: normal;
+    /* avoid ugly mid-word breaks */
+    white-space: normal;
     overflow-wrap: normal;
+    word-break: keep-all;
   }
 
-  /* Button */
+  /* Keep VIN readable if long */
+  #vin{
+    font-size: 40px;
+    letter-spacing: 0.5px;
+  }
+
+  /* Button (not shown in your crop, but kept) */
   .btnWrap{
-    padding: 22px 0 18px;
-    background:#fff;
+    padding: 18px 0 18px;
+    background: var(--white);
   }
   .btn{
-    width: 80%;
-    height: 58px;
+    width: 320px;
+    max-width: 85%;
+    height: 62px;
     display:block;
     margin: 0 auto;
     border:0;
-    border-radius: 6px;
-    background: var(--green);
+    border-radius: 8px;
+    background: var(--greenBtn);
     color:#fff;
-    font-size: 18px;
+    font-size: 22px;
     font-weight: 900;
     letter-spacing: 1px;
     cursor:pointer;
   }
 
-  /* ✅ On small screens, slightly reduce value size instead of wrapping */
-  @media (max-width:420px){
-    .badge{ height: 270px; }
-    .badge span{ font-size: 54px; }
-    .title{ font-size: 32px; }
-    .cellR{ font-size: 22px; }
+  /* Mobile tuning */
+  @media (max-width: 520px){
+    .consulta{ font-size: 22px; }
+    .cellL{ font-size: 22px; min-height: 70px; }
+    .cellR{ font-size: 34px; }
+    #vin{ font-size: 32px; }
+    .row{ min-height: 70px; }
   }
 </style>
 </head>
 
 <body>
   <div class="wrap">
-    <div class="badge"><span>¡Permiso<br>Vigente!</span></div>
-
-    <div class="title">Permiso de Importación<br>de Auto Americano</div>
 
     <div class="consulta">
       <span class="label">FECHA Y HORA DE CONSULTA:</span>
-      <span class="value" id="fechaConsulta"></span>
+      <span class="val" id="fechaConsulta"></span>
     </div>
 
     <div class="card">
@@ -175,6 +146,7 @@
         <button class="btn" onclick="location.href='index.html'">CERRAR</button>
       </div>
     </div>
+
   </div>
 
 <script>
@@ -188,10 +160,10 @@ const vin    = p.get("vin")    || "";
 const fechaAltaRaw = p.get("fechaAlta") || ""; // YYYY-MM-DD
 const DIAS_PERMISO = parseInt(p.get("dias") || "180", 10);
 
-// Masked VIN: ******** + last 8
+// Masked VIN (like reference: ********NH517674)
 const maskedVin = vin ? ("********" + vin.slice(-8)) : "";
 
-// DD/MON/YYYY
+// DD/MON/YYYY (24/NOV/2025)
 const months = ["JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC"];
 function formatBanjercito(yyyy_mm_dd){
   if (!yyyy_mm_dd || !yyyy_mm_dd.includes("-")) return "";
@@ -213,11 +185,14 @@ const altaDisplay = formatBanjercito(fechaAltaRaw);
 const retornoRaw = fechaAltaRaw ? addDays(fechaAltaRaw, DIAS_PERMISO) : "";
 const retornoDisplay = retornoRaw ? formatBanjercito(retornoRaw) : "";
 
-// Consulta date + time on next line
+// FECHA Y HORA like: "24 de Noviembre del 2025 22:26:46"
 const now = new Date();
-const fecha = now.toLocaleDateString("es-MX", { day:"2-digit", month:"long", year:"numeric" });
-const hora  = now.toLocaleTimeString("es-MX", { hour12:false });
-document.getElementById("fechaConsulta").innerHTML = `${fecha}<br>${hora}`;
+const day = String(now.getDate()).padStart(2,"0");
+const monthName = now.toLocaleDateString("es-MX", { month:"long" });
+const monthCap = monthName.charAt(0).toUpperCase() + monthName.slice(1);
+const year = now.getFullYear();
+const time = now.toLocaleTimeString("es-MX", { hour12:false });
+document.getElementById("fechaConsulta").textContent = `${day} de ${monthCap} del ${year} ${time}`;
 
 // Remaining days
 function diffDays(from_yyyy_mm_dd, to_yyyy_mm_dd){
