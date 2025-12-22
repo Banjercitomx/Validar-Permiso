@@ -7,11 +7,10 @@
 
 <style>
   :root{
-    --bg: #dff3e3;     /* screenshot background */
-    --green: #4caf50;  /* badge + button */
-    --value: #1f6f55;  /* value text green */
-    --line: #d7e6d7;   /* dividers */
-    --rowbg: #f2f2f2;  /* alternating row */
+    --bg: #dff3e3;
+    --green: #4caf50;
+    --value: #177a5a;
+    --line: #d9eadb;
     --text: #111;
   }
 
@@ -33,19 +32,19 @@
   /* Big oval */
   .badge{
     width: 100%;
-    height: 320px;
+    height: 300px;
     background: var(--green);
-    border-radius: 200px;
+    border-radius: 180px;
     display:flex;
     align-items:center;
     justify-content:center;
     text-align:center;
-    margin: 0 auto 18px;
+    margin: 0 auto 22px;
   }
   .badge span{
     color:#fff;
     font-weight: 900;
-    font-size: 64px;
+    font-size: 58px;
     line-height: 1.02;
     text-shadow: 3px 3px 0 rgba(0,0,0,.55);
   }
@@ -54,108 +53,82 @@
   .title{
     text-align:center;
     font-weight: 900;
-    font-size: 40px;
+    font-size: 34px;
     line-height: 1.12;
-    margin: 0 0 14px;
-    text-shadow: 3px 3px 0 rgba(0,0,0,.40);
+    margin: 0 0 18px;
+    text-shadow: 2px 2px 0 rgba(0,0,0,.35);
   }
 
-  /* Date line: EXACT look (two lines: label + value wraps naturally) */
+  /* Consulta line */
   .consulta{
-    font-size: 18px;
-    line-height: 1.25;
-    margin: 0 2px 12px;
-  }
-  .consulta .label{
-    font-weight: 900;
+    font-size: 14px;
+    font-weight: 800;
+    letter-spacing: .2px;
+    margin: 0 2px 10px;
     text-transform: uppercase;
   }
-  .consulta .value{
-    font-weight: 400;
+  .consulta .light{
+    font-weight: 500;
+    text-transform: none;
   }
 
-  /* Table card */
+  /* Card */
   .card{
     background:#fff;
-    border: 2px solid var(--line);
+    border: 1px solid var(--line);
   }
 
-  /* Rows: no gaps, alternating grey like screenshot */
+  /* Rows */
   .row{
     display:flex;
-    align-items:center;
-    min-height: 70px;
+    padding: 10px 12px;
     border-bottom: 2px solid var(--line);
-    background:#fff;
+    align-items:center;
   }
-  .row:nth-child(even){
-    background: var(--rowbg);
-  }
-  .row:last-child{
-    border-bottom:none;
-  }
+  .row:last-child{ border-bottom: 0; }
 
-  .cellL{
-    width: 52%;
-    padding: 16px 16px;
-    font-size: 20px;
-    font-weight: 400;          /* lighter like screenshot */
+  .label{
+    width: 60%;                 /* tighter like screenshot */
+    font-size: 13px;
+    font-weight: 900;
     text-transform: uppercase;
     line-height: 1.05;
-    color:#111;
   }
 
-  .cellR{
-    width: 48%;
-    padding: 16px 16px;
-    font-size: 34px;           /* value size like screenshot */
+  .value{
+    width: 40%;
+    padding-left: 6px;          /* spacing fix */
+    font-size: 18px;
     font-weight: 900;
     color: var(--value);
-    text-align: left;          /* values are LEFT aligned in screenshot */
     line-height: 1.05;
-
-    /* keep values on one line like screenshot */
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: clip;
+    text-align:left;
+    word-break: break-word;
   }
 
-  /* VIN should stay on one line (like screenshot) */
-  #vin{
-    font-size: 32px;
-    letter-spacing: .5px;
+  /* Button */
+  .actions{
+    background:#fff;
+    padding: 18px 0 0;
   }
-
-  /* Button at bottom */
-  .btnWrap{
-    background: var(--bg);
-    padding-top: 18px;
-  }
-  .btn{
-    width: 320px;
-    max-width: 90%;
-    height: 58px;
+  button{
+    width: 160px;
+    height: 44px;
     display:block;
     margin: 0 auto;
     border:0;
-    border-radius: 8px;
+    border-radius: 4px;
     background: var(--green);
     color:#fff;
-    font-size: 20px;
     font-weight: 900;
-    letter-spacing: 1px;
+    letter-spacing: .3px;
     cursor:pointer;
   }
 
-  /* iPhone screens */
   @media (max-width:420px){
-    .wrap{ padding: 18px 14px 22px; }
-    .badge{ height: 300px; border-radius: 190px; }
-    .badge span{ font-size: 58px; }
-    .title{ font-size: 36px; }
-    .cellL{ font-size: 18px; }
-    .cellR{ font-size: 30px; }
-    #vin{ font-size: 28px; }
+    .badge{ height: 270px; }
+    .badge span{ font-size: 52px; }
+    .title{ font-size: 30px; }
   }
 </style>
 </head>
@@ -167,24 +140,24 @@
     <div class="title">Permiso de Importación<br>de Auto Americano</div>
 
     <div class="consulta">
-      <span class="label">FECHA Y HORA DE CONSULTA:</span>
-      <span class="value" id="fechaConsulta"></span>
+      FECHA Y HORA DE CONSULTA:
+      <span class="light" id="fechaConsulta"></span>
     </div>
 
     <div class="card">
-      <div class="row"><div class="cellL">FOLIO PERMISO:</div><div class="cellR" id="folio"></div></div>
-      <div class="row"><div class="cellL">FECHA DE ALTA:</div><div class="cellR" id="alta"></div></div>
-      <div class="row"><div class="cellL">FECHA MÁXIMA<br>DE RETORNO:</div><div class="cellR" id="retorno"></div></div>
-      <div class="row"><div class="cellL">DIAS<br>DISPONIBLES:</div><div class="cellR" id="dias"></div></div>
-      <div class="row"><div class="cellL">MARCA:</div><div class="cellR" id="marca"></div></div>
-      <div class="row"><div class="cellL">VIN:</div><div class="cellR" id="vin"></div></div>
-      <div class="row"><div class="cellL">MODELO:</div><div class="cellR" id="modelo"></div></div>
-      <div class="row"><div class="cellL">ESTATUS<br>PERMISO:</div><div class="cellR" id="estatus"></div></div>
-      <div class="row"><div class="cellL">REMOLQUE:</div><div class="cellR" id="remolque"></div></div>
+      <div class="row"><div class="label">FOLIO PERMISO:</div><div class="value" id="folio"></div></div>
+      <div class="row"><div class="label">FECHA DE ALTA:</div><div class="value" id="alta"></div></div>
+      <div class="row"><div class="label">FECHA MÁXIMA<br>DE RETORNO:</div><div class="value" id="retorno"></div></div>
+      <div class="row"><div class="label">DIAS<br>DISPONIBLES:</div><div class="value" id="dias"></div></div>
+      <div class="row"><div class="label">MARCA:</div><div class="value" id="marca"></div></div>
+      <div class="row"><div class="label">VIN:</div><div class="value" id="vin"></div></div>
+      <div class="row"><div class="label">MODELO:</div><div class="value" id="modelo"></div></div>
+      <div class="row"><div class="label">ESTATUS<br>PERMISO:</div><div class="value" id="estatus"></div></div>
+      <div class="row"><div class="label">REMOLQUE:</div><div class="value" id="remolque"></div></div>
     </div>
 
-    <div class="btnWrap">
-      <button class="btn" onclick="location.href='index.html'">CERRAR</button>
+    <div class="actions">
+      <button onclick="location.href='index.html'">CERRAR</button>
     </div>
   </div>
 
@@ -196,65 +169,50 @@ const marca  = p.get("marca")  || "";
 const modelo = p.get("modelo") || "";
 const vin    = p.get("vin")    || "";
 
-const fechaAltaRaw = p.get("fechaAlta") || ""; // YYYY-MM-DD
+const fechaAltaRaw = p.get("fechaAlta") || "";
 const DIAS_PERMISO = parseInt(p.get("dias") || "180", 10);
 
-/* VIN mask: ******** + last 8 */
+// VIN masked
 const maskedVin = vin ? ("********" + vin.slice(-8)) : "";
 
-/* DD/MON/YYYY */
+// Format DD/MON/YYYY
 const months = ["JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC"];
-function formatBanjercito(yyyy_mm_dd){
-  if (!yyyy_mm_dd || !yyyy_mm_dd.includes("-")) return "";
-  const [y,m,d] = yyyy_mm_dd.split("-");
-  const mm = parseInt(m,10);
-  return `${d}/${months[mm-1]}/${y}`;
+function formatBanjercito(d){
+  if(!d) return "";
+  const [y,m,dd] = d.split("-");
+  return `${dd}/${months[parseInt(m)-1]}/${y}`;
 }
-function addDays(yyyy_mm_dd, days){
-  const dt = new Date(yyyy_mm_dd + "T12:00:00");
-  dt.setDate(dt.getDate() + days);
-  const y = dt.getFullYear();
-  const m = String(dt.getMonth()+1).padStart(2,"0");
-  const d = String(dt.getDate()).padStart(2,"0");
-  return `${y}-${m}-${d}`;
+function addDays(d, n){
+  const dt = new Date(d + "T12:00:00");
+  dt.setDate(dt.getDate() + n);
+  return `${dt.getFullYear()}-${String(dt.getMonth()+1).padStart(2,"0")}-${String(dt.getDate()).padStart(2,"0")}`;
 }
 
-/* Return date (+DIAS_PERMISO) */
 const altaDisplay = formatBanjercito(fechaAltaRaw);
 const retornoRaw = fechaAltaRaw ? addDays(fechaAltaRaw, DIAS_PERMISO) : "";
 const retornoDisplay = retornoRaw ? formatBanjercito(retornoRaw) : "";
 
-/* FECHA Y HORA like screenshot: "24 de Noviembre del 2025 22:26:46" */
+// Fecha consulta
 const now = new Date();
-const dd = String(now.getDate()).padStart(2,"0");
-const monthName = now.toLocaleDateString("es-MX",{month:"long"});
-const monthCap = monthName.charAt(0).toUpperCase() + monthName.slice(1);
-const yyyy = now.getFullYear();
-const hhmmss = now.toLocaleTimeString("es-MX",{hour12:false});
-document.getElementById("fechaConsulta").textContent = ` ${dd} de ${monthCap} del ${yyyy} ${hhmmss}`;
+const fecha = now.toLocaleDateString("es-MX",{day:"2-digit",month:"long",year:"numeric"});
+const hora  = now.toLocaleTimeString("es-MX",{hour12:false});
+document.getElementById("fechaConsulta").textContent = `${fecha} ${hora}`;
 
-/* Remaining days */
-function diffDays(from_yyyy_mm_dd, to_yyyy_mm_dd){
-  const a = new Date(from_yyyy_mm_dd + "T12:00:00");
-  const b = new Date(to_yyyy_mm_dd + "T12:00:00");
-  return Math.floor((b - a) / (1000*60*60*24));
+// Remaining days
+function diffDays(a,b){
+  return Math.floor((new Date(b+"T12:00:00") - new Date(a+"T12:00:00")) / 86400000);
 }
-const hoyRaw =
-  `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,"0")}-${String(now.getDate()).padStart(2,"0")}`;
+const hoy = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,"0")}-${String(now.getDate()).padStart(2,"0")}`;
+const restantes = fechaAltaRaw ? Math.max(0, DIAS_PERMISO - diffDays(fechaAltaRaw,hoy)) : "";
 
-const restantes =
-  (fechaAltaRaw && retornoRaw)
-    ? Math.max(0, DIAS_PERMISO - diffDays(fechaAltaRaw, hoyRaw))
-    : "";
-
-/* Fill values */
-document.getElementById("folio").textContent   = folio;
-document.getElementById("alta").textContent    = altaDisplay;
+// Fill
+folio && (document.getElementById("folio").textContent = folio);
+document.getElementById("alta").textContent = altaDisplay;
 document.getElementById("retorno").textContent = retornoDisplay;
-document.getElementById("dias").textContent    = (restantes === "" ? "" : String(restantes));
-document.getElementById("marca").textContent   = (marca || "").toUpperCase();
-document.getElementById("vin").textContent     = maskedVin;
-document.getElementById("modelo").textContent  = modelo;
+document.getElementById("dias").textContent = restantes;
+document.getElementById("marca").textContent = marca;
+document.getElementById("vin").textContent = maskedVin;
+document.getElementById("modelo").textContent = modelo;
 document.getElementById("estatus").textContent = "VIGENTE";
 document.getElementById("remolque").textContent = "SIN REMOLQUE";
 </script>
