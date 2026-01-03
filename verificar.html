@@ -50,7 +50,7 @@ body{
   text-shadow:3px 3px 0 rgba(0,0,0,.55);
 }
 
-/* ✅ 2-LINE TITLE */
+/* 2-LINE TITLE */
 .title{
   text-align:center;
   font-weight:900;
@@ -77,11 +77,13 @@ body{
   overflow:hidden;
 }
 
+/* ROWS — FIXED SPACING */
 .row{
   display:flex;
   align-items:center;
-  padding:14px 14px;
+  padding:14px;
   border-bottom:3px solid var(--line);
+  gap:6px;                 /* 👈 spacing control */
 }
 .row:nth-child(even){
   background:var(--rowAlt);
@@ -90,25 +92,20 @@ body{
 
 /* Labels */
 .label{
-  width:58%;
+  flex:0 0 54%;             /* 👈 was 58% — caused the big gap */
   font-size:18px;
   font-weight:400;
   text-transform:uppercase;
   line-height:1.05;
 }
 
-/* Gap between label & value (tight like original) */
-.gap{
-  width:8px;
-}
-
 /* Values */
 .value{
   flex:1;
-  font-size:19px;        /* exactly 1px bigger than labels */
+  font-size:19px;           /* 1px larger than label */
   font-weight:900;
   color:var(--value);
-  white-space:nowrap;    /* VIN stays on one line */
+  white-space:nowrap;
   text-align:left;
 }
 
@@ -138,7 +135,6 @@ body{
     <span>¡Permiso<br>Vigente!</span>
   </div>
 
-  <!-- ✅ EXACT 2-LINE TITLE -->
   <div class="title">
     Permiso de Importación<br>
     de Auto Americano
@@ -150,15 +146,15 @@ body{
   </div>
 
   <div class="card">
-    <div class="row"><div class="label">FOLIO PERMISO:</div><div class="gap"></div><div class="value" id="folio"></div></div>
-    <div class="row"><div class="label">FECHA DE ALTA:</div><div class="gap"></div><div class="value" id="alta"></div></div>
-    <div class="row"><div class="label">FECHA MÁXIMA<br>DE RETORNO:</div><div class="gap"></div><div class="value" id="retorno"></div></div>
-    <div class="row"><div class="label">DIAS<br>DISPONIBLES:</div><div class="gap"></div><div class="value" id="dias"></div></div>
-    <div class="row"><div class="label">MARCA:</div><div class="gap"></div><div class="value" id="marca"></div></div>
-    <div class="row"><div class="label">VIN:</div><div class="gap"></div><div class="value" id="vin"></div></div>
-    <div class="row"><div class="label">MODELO:</div><div class="gap"></div><div class="value" id="modelo"></div></div>
-    <div class="row"><div class="label">ESTATUS<br>PERMISO:</div><div class="gap"></div><div class="value">VIGENTE</div></div>
-    <div class="row"><div class="label">REMOLQUE:</div><div class="gap"></div><div class="value">SIN REMOLQUE</div></div>
+    <div class="row"><div class="label">FOLIO PERMISO:</div><div class="value" id="folio"></div></div>
+    <div class="row"><div class="label">FECHA DE ALTA:</div><div class="value" id="alta"></div></div>
+    <div class="row"><div class="label">FECHA MÁXIMA<br>DE RETORNO:</div><div class="value" id="retorno"></div></div>
+    <div class="row"><div class="label">DIAS<br>DISPONIBLES:</div><div class="value" id="dias"></div></div>
+    <div class="row"><div class="label">MARCA:</div><div class="value" id="marca"></div></div>
+    <div class="row"><div class="label">VIN:</div><div class="value" id="vin"></div></div>
+    <div class="row"><div class="label">MODELO:</div><div class="value" id="modelo"></div></div>
+    <div class="row"><div class="label">ESTATUS<br>PERMISO:</div><div class="value">VIGENTE</div></div>
+    <div class="row"><div class="label">REMOLQUE:</div><div class="value">SIN REMOLQUE</div></div>
   </div>
 
   <div class="btnWrap">
