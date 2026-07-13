@@ -241,14 +241,7 @@ const vehicles = [
 
     remolqueVIN: "1G9BU142XTP659669"
   }
-
 ];
-/* =======================
-   FECHAS (EDITA AQUÍ)
-   - Formato: YYYY-MM-DD
-   ======================= */
-const FECHA_ALTA = "2026-07-16"; // 16 de Julio de 2026
-const DIAS_PERMISO = 180;        // retorno = alta + 180 días
 
 /* ========= CAPTCHA ========= */
 let generatedCaptcha = "";
@@ -316,12 +309,11 @@ function validar() {
     url.searchParams.set("modelo", v.modelo);
     url.searchParams.set("vin",    v.vinFull);
 
-    // ✅ Dates sent to verificar.html (easy to edit above)
-    url.searchParams.set("fechaAlta", FECHA_ALTA);
-    url.searchParams.set("dias", String(DIAS_PERMISO));
+// Vehicle information
+url.searchParams.set("fechaAlta", v.fechaAlta);
+url.searchParams.set("dias", String(v.diasPermiso));
 
-    url.searchParams.set("remolqueVIN",v.remolqueVIN||"SIN REMOLQUE");
-    window.location.href = url.toString();
+url.searchParams.set("remolqueVIN", v.remolqueVIN);
 }
 
 /* Eventos */
