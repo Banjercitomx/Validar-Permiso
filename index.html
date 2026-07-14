@@ -304,10 +304,18 @@ function validar() {
     }
 
     const url = new URL("verificar.html", window.location.href);
-    url.searchParams.set("folio",  v.folio);
-    url.searchParams.set("marca",  v.marca);
-    url.searchParams.set("modelo", v.modelo);
-    url.searchParams.set("vin",    v.vinFull);
+
+url.searchParams.set("folio", v.folio);
+url.searchParams.set("marca", v.marca);
+url.searchParams.set("modelo", v.modelo);
+url.searchParams.set("vin", v.vinFull);
+
+url.searchParams.set("fechaAlta", v.fechaAlta);
+url.searchParams.set("dias", String(v.diasPermiso));
+url.searchParams.set("remolqueVIN", v.remolqueVIN);
+
+window.location.href = url.toString();
+}
 
 // Vehicle information
 url.searchParams.set("fechaAlta", v.fechaAlta);
