@@ -176,7 +176,7 @@ const usados=Math.max(0,daysBetween(fechaAlta,today()));
 
 document.getElementById("dias").textContent=Math.max(0,DIAS-usados);
 
-const m=["JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC"];
+const m=["ENE","FEB","MAR","ABR","MAY","JUN","JUL","AGO","SEP","OCT","NOV","DIC"];
 const fmt=d=>{const[a,b,c]=d.split("-");return`${c}/${m[b-1]}/${a}`};
 
 document.getElementById("folio").textContent=p.get("folio")||"50984679";
