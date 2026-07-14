@@ -180,11 +180,23 @@ function addDays(dateString, days){
   const day=String(d.getDate()).padStart(2,"0");
   return `${y}-${m}-${day}`;
 }
-const fechaRetorno=addDays(fechaAlta,DIAS);
-const hoy=noon(today());
-const retorno=noon(fechaRetorno);
-const diasRestantes=Math.max(0,Math.ceil((retorno-hoy)/86400000));
-document.getElementById("dias").textContent=diasRestantes;
+const fechaRetorno = addDays(fechaAlta, DIAS);
+const hoy = noon(today());
+const alta = noon(fechaAlta);
+const retorno = noon(fechaRetorno);
+
+let diasRestantes;
+
+if (hoy <= alta) {
+    // Before or on the start date, always show the full 180 days.
+    diasRestantes = DIAS;
+} else {
+    // Start counting down the day after the permit becomes active.
+    const diasTranscurridos = Math.floor((hoy - alta) / 86400000);
+    diasRestantes = Math.max(0, DIAS - diasTranscurridos);
+}
+
+document.getElementById("dias").textContent = diasRestantes;
 
 const m=["ENE","FEB","MAR","ABR","MAY","JUN","JUL","AGO","SEP","OCT","NOV","DIC"];
 const fmt=d=>{const[a,b,c]=d.split("-");return`${c}/${m[b-1]}/${a}`};
