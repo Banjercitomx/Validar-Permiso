@@ -164,33 +164,103 @@ body{
 </div>
 
 <script>
-const p=new URLSearchParams(location.search);
-const fechaAlta=p.get("fechaAlta")||"2026-07-16";
-const remolqueVIN=p.get("remolqueVIN")||"SIN REMOLQUE";
-const DIAS=180;
+const p = new URLSearchParams(location.search);
 
-function noon(d){const[x,y,z]=d.split("-");return new Date(x,y-1,z,12);}
-function today(){const n=new Date();return`${n.getFullYear()}-${String(n.getMonth()+1).padStart(2,"0")}-${String(n.getDate()).padStart(2,"0")}`;}
-function daysBetween(a,b){return Math.floor((noon(b)-noon(a))/86400000);}
-const usados=Math.max(0,daysBetween(fechaAlta,today()));
+// Read everything from index.html
+const fechaAlta = p.get("fechaAlta") || "2026-07-16";
+const DIAS = parseInt(p.get("dias") || "180", 10);
+const remolqueVIN = p.get("remolqueVIN") || "SIN REMOLQUE";
 
-document.getElementById("dias").textContent=Math.max(0,DIAS-usados);
+// ---------- Date functions ----------
+function noon(d){
+    const [y,m,day] = d.split("-");
+    return new Date(y,m-1,day,12);
+}
 
-const m=["ENE","FEB","MAR","ABR","MAY","JUN","JUL","AGO","SEP","OCT","NOV","DIC"];
-const fmt=d=>{const[a,b,c]=d.split("-");return`${c}/${m[b-1]}/${a}`};
+function today(){
+    const n = new Date();
+    return `${n.getFullYear()}-${String(n.getMonth()+1).padStart(2,"0")}-${String(n.getDate()).padStart(2,"0")}`;
+}
 
-document.getElementById("folio").textContent=p.get("folio")||"50984679";
-document.getElementById("alta").textContent=fmt(fechaAlta);
-document.getElementById("retorno").textContent=fmt("2026-06-17");
-document.getElementById("marca").textContent=(p.get("marca")||"TOYOTA");
-document.getElementById("vin").textContent="********"+(p.get("vin")||"RM011856").slice(-8);
-document.getElementById("modelo").textContent=p.get("modelo")||"2024";
-document.getElementById("remolque").textContent=remolqueVIN;
+function daysBetween(a,b){
+    return Math.floor((noon(b)-noon(a))/86400000);
+}
 
-const now=new Date();
-document.getElementById("fechaConsulta").textContent=
-  now.toLocaleDateString("es-MX",{day:"2-digit",month:"long",year:"numeric"})+
-  " "+now.toLocaleTimeString("es-MX",{hour12:false});
+function addDays(dateString, days){
+
+    const d = noon(dateString);
+
+    d.setDate(d.getDate() + days);
+
+    const y = d.getFullYear();
+    const m = String(d.getMonth()+1).padStart(2,"0");
+    const day = String(d.getDate()).padStart(2,"0");
+
+    return `${y}-${m}-${day}`;
+}
+
+const usados = Math.max(0, daysBetween(fechaAlta, today()));
+
+document.getElementById("dias").textContent =
+    Math.max(0, DIAS-usados);
+
+// ---------- Date formatting ----------
+const meses = [
+    "ENE","FEB","MAR","ABR","MAY","JUN",
+    "JUL","AGO","SEP","OCT","NOV","DIC"
+];
+
+function fmt(dateString){
+
+    const [y,m,d] = dateString.split("-");
+
+    return `${d}/${meses[parseInt(m)-1]}/${y}`;
+}
+
+// ---------- Calculate return date ----------
+const fechaRetorno = addDays(fechaAlta, DIAS);
+
+// ---------- Vehicle information ----------
+document.getElementById("folio").textContent =
+    p.get("folio") || "";
+
+document.getElementById("alta").textContent =
+    fmt(fechaAlta);
+
+document.getElementById("retorno").textContent =
+    fmt(fechaRetorno);
+
+document.getElementById("marca").textContent =
+    p.get("marca") || "";
+
+document.getElementById("vin").textContent =
+    "********" + (p.get("vin") || "").slice(-8);
+
+document.getElementById("modelo").textContent =
+    p.get("modelo") || "";
+
+document.getElementById("remolque").textContent =
+    remolqueVIN;
+
+// ---------- Current date ----------
+const now = new Date();
+
+document.getElementById("fechaConsulta").textContent =
+    now.toLocaleDateString("es-MX",{
+        day:"2-digit",
+        month:"long",
+        year:"numeric"
+    }).toUpperCase()
+    + " " +
+    now.toLocaleTimeString("es-MX",{
+        hour12:false
+    });
+
+// ---------- Close button ----------
+document.querySelector(".btn").onclick = () => {
+    location.href = "index.html";
+};
+
 </script>
 
 </body>
