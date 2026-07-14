@@ -315,6 +315,7 @@ url.searchParams.set("dias", String(v.diasPermiso));
 
 url.searchParams.set("remolqueVIN", v.remolqueVIN);
 }
+window.location.href = url.toString();
 
 /* Eventos */
 document.getElementById("clearBtn").addEventListener("click", limpiar);
